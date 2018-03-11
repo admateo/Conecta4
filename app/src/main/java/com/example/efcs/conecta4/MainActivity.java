@@ -1,12 +1,15 @@
-package com.example.efcs.cuatroenraya;
+package com.example.efcs.conecta4;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Game juego;
+    Boolean musica, maquina;
+    int contador = 1;
     private final int ids[][] = {
             {R.id.f0c0Button, R.id.f0c1Button,R.id.f0c2Button,R.id.f0c3Button,R.id.f0c4Button,R.id.f0c5Button, R.id.f0c6Button},
             {R.id.f1c0Button, R.id.f1c1Button,R.id.f1c2Button,R.id.f1c3Button,R.id.f1c4Button,R.id.f1c5Button, R.id.f1c6Button},
@@ -28,19 +33,24 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
         juego = new Game(Game.JUGADOR);
         if(getRotation(getApplicationContext()).equals("vertical")){
             setContentView(R.layout.activity_main);
         }else{
             setContentView(R.layout.activity_main);
         }
+
+        SharedPreferences prefs = getSharedPreferences("MisPreferencias",Context.MODE_PRIVATE);
+
+        musica = prefs.getBoolean("musica", false);
+        maquina = prefs.getBoolean("maquina", false);
     }
 
     public void onResume(){
         super.onResume();
-
-        Music.play(this, R.raw.cancion);
+        if(musica){
+            Music.play(this, R.raw.cancion);
+        }
 
     }
     public void onPause(){
@@ -87,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 juego.setEstado('G');
                 mensajeGanador("¡Alguien ha ganado!", "Se iniciará una nueva partida");
             }else{
-                juego.cambiarTurno();
+                if(maquina){
+                    juego.cambiarTurno();
+                    procesaJugadaMaquina((int) (Math.random() * 6));
+                } else{
+                    juego.cambiarTurno();
+                }
             }
 
             if(juego.tableroCompleto()){
@@ -98,15 +113,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void procesaJugadaMaquina(int col){
+
+        if(juego.compruebaColumnaVacia(col)){
+            Toast.makeText(this,"Columna completa",Toast.LENGTH_SHORT).show();
+        }else {
+            juego.colocarFicha(col);
+            dibujarFicha(col);
+            int fila = juego.filaSelect(col);
+            if(juego.jugadaGanadora(fila, col)){
+                juego.setEstado('G');
+                mensajeGanador("¡Alguien ha ganado!", "Se iniciará una nueva partida");
+            }else{
+                    juego.cambiarTurno();
+                }
+            }
+
+            if(juego.tableroCompleto()){
+                juego.setEstado('T');
+                mensajeGanador("¡Habeis quedado empatados!", "Se iniciará una nueva partida");
+                //Toast
+            }
+        }
+
+
     private void dibujarFicha(int columna){
 
         int id = juego.filaSelect(columna);
         ImageButton img = (ImageButton) findViewById(ids[id][columna]);
         if(juego.getTurno() == Game.JUGADOR){
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                img.setImageResource(R.drawable.shape_ring_green);
+                img.setImageResource(R.drawable.shape_ring_yellow);
             }else{
-                img.setImageResource(R.drawable.shape_ring_green);
+                img.setImageResource(R.drawable.shape_ring_yellow);
             }
 
         }else{
@@ -159,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
                 ImageButton img = (ImageButton) findViewById(ids[i][k]);
                 if(juego.tablero[i][k] == juego.JUGADOR){
                     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                        img.setImageResource(R.drawable.shape_ring_green);
+                        img.setImageResource(R.drawable.shape_ring_yellow);
                     }else{
-                        img.setImageResource(R.drawable.shape_ring_green);
+                        img.setImageResource(R.drawable.shape_ring_yellow);
                     }
 
                 }else if(juego.tablero[i][k] == juego.MAQUINA){
@@ -190,6 +229,28 @@ public class MainActivity extends AppCompatActivity {
         dibujarTablero();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_activity, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.acercade){
+            startActivity(new Intent(this, AcercaDe.class));
+        }
+
+        if(id == R.id.configuracion){
+            startActivity(new Intent(this, Configuracion.class));
+
+        }
+
+        return true;
+    }
 
 }
 

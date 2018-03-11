@@ -1,4 +1,4 @@
-package com.example.efcs.cuatroenraya;
+package com.example.efcs.conecta4;
 
 public class Game {
     static final int MAQUINA = 1;
@@ -28,6 +28,7 @@ public class Game {
     }
 
     public int filaSelect(int columna) {
+
         int i = NFILAS-1;
         int fila = -1;
 
@@ -55,7 +56,11 @@ public class Game {
     }
 
     public void cambiarTurno() {
-        this.setTurno(this.getTurno() == MAQUINA ? JUGADOR : MAQUINA);
+        if(this.getTurno() == MAQUINA){
+            this.setTurno(JUGADOR);
+        }else{
+            this.setTurno(MAQUINA);
+        }
     }
 
     public boolean colocarFicha(int colm) {

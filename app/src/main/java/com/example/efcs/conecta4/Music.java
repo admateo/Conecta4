@@ -1,4 +1,4 @@
-package com.example.efcs.cuatroenraya;
+package com.example.efcs.conecta4;
 
 import android.content.Context;
 import android.media.MediaPlayer;

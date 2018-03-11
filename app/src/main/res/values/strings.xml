@@ -1,3 +1,24 @@
 <resources>
-    <string name="app_name">cuatroEnRaya</string>
+    <string name="app_name" translatable="false">Conecta4</string>
+    <string name="acerca_de">Acerca de</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
+    <string name="version">Version</string>
+    <string name="_1_0" translatable="false">1.0</string>
+    <string name="contacto">Contacto</string>
+    <string name="correo" translatable="false">admateo22@gmail.com</string>
+    <string name="configuracion">Configuracion</string>
+    <string name="mensaje">Mensaje</string>
+    <string name="conecta4" translatable="false">Conecta4</string>
+    <string name="circulo">circulo</string>
+    <string name="musica">Musica</string>
+    <string name="nombre">Nombre</string>
+    <string name="jugar_maquina">Jugar contra la máquina</string>
+    <string name="nombre_jugador">Nombre</string>
+    <string name="modo_de_juego">Modo de juego</string>
+    <string name="metodos_de_juego">Metodos de juego</string>
+    <string name="title_activity_interfaz_online">InterfazOnline</string>
+    <string name="crear_partida">Crear partida</string>
+    <string name="jugar_online">Jugar online</string>
+    <string name="jugar_offline">Jugar offline</string>
+    <string name="maquina">Jugar contra la maquina</string>
 </resources>

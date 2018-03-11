@@ -7,7 +7,7 @@
     android:background="#ffffff"
     android:orientation="vertical"
     android:paddingBottom="20dp"
-    tools:context="com.example.efcs.cuatroenraya.MainActivity">
+    tools:context="com.example.efcs.conecta4.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

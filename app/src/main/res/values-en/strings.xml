@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Conecta4</string>
+    <string name="acerca_de">About</string>
+    <string name="version">Version</string>
+    <string name="contacto">Contact</string>
+    <string name="configuracion">Configuration</string>
+    <string name="mensaje">Message</string>
+    <string name="circulo">Circle</string>
+    <string name="musica">Music</string>
+    <string name="nombre">Name</string>
+    <string name="nombre_jugador">Name</string>
+    <string name="jugar_maquina">Play against the machine</string>
+</resources>
